@@ -2,9 +2,8 @@ package hw02unpackstring
 
 import (
 	"errors"
-	"testing"
-
 	"github.com/stretchr/testify/require"
+	"testing"
 )
 
 func TestUnpack(t *testing.T) {
@@ -35,6 +34,17 @@ func TestUnpack(t *testing.T) {
 
 func TestUnpackInvalidString(t *testing.T) {
 	invalidStrings := []string{"3abc", "45", "aaa10b"}
+	for _, tc := range invalidStrings {
+		tc := tc
+		t.Run(tc, func(t *testing.T) {
+			_, err := Unpack(tc)
+			require.Truef(t, errors.Is(err, ErrInvalidString), "actual error %q", err)
+		})
+	}
+}
+
+func TestUnpackInvalidString2(t *testing.T) {
+	invalidStrings := []string{"ab33", "s3s3"}
 	for _, tc := range invalidStrings {
 		tc := tc
 		t.Run(tc, func(t *testing.T) {
