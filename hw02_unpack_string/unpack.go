@@ -7,10 +7,10 @@ import (
 	"unicode"
 )
 
-// ErrInvalidString is Error message
+// ErrInvalidString is Error message.
 var ErrInvalidString = errors.New("invalid string")
 
-// Unpack string
+// Unpack string.
 func Unpack(s string) (string, error) {
 	var result strings.Builder
 	var lastRune rune
@@ -22,11 +22,10 @@ func Unpack(s string) (string, error) {
 			if !unicode.IsDigit(r) && unicode.IsDigit(rune(s[i+1])) {
 				if lastRune == r {
 					return "", ErrInvalidString
-				} //else {
+				}
 				countRepeat, _ := strconv.Atoi(string(s[i+1]))
 				result.WriteString(strings.Repeat(string(r), countRepeat))
 				lastRune = r
-				//}
 			} else {
 				if !unicode.IsDigit(r) {
 					result.WriteString(string(r))
