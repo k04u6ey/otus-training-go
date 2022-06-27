@@ -15,9 +15,10 @@ func Unpack(s string) (string, error) {
 	var result strings.Builder
 	var lastRune rune
 	for i, r := range s {
-		if unicode.IsDigit(r) && i == 0 {
+		switch {
+		case unicode.IsDigit(r) && i == 0:
 			return "", ErrInvalidString
-		} else if i != len(s)-1 {
+		case i != len(s)-1:
 			if !unicode.IsDigit(r) && unicode.IsDigit(rune(s[i+1])) {
 				if lastRune == r {
 					return "", ErrInvalidString
@@ -32,7 +33,7 @@ func Unpack(s string) (string, error) {
 					return "", ErrInvalidString
 				}
 			}
-		} else if !unicode.IsDigit(r) {
+		case !unicode.IsDigit(r):
 			result.WriteString(string(r))
 			lastRune = r
 		}
